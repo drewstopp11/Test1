@@ -46,6 +46,8 @@ def main():
 
         # Drop existing tables if they exist
         print("Dropping existing tables if they exist...")
+        cursor.execute("DROP TABLE IF EXISTS tasks")
+        cursor.execute("DROP TABLE IF EXISTS projects")
         cursor.execute("DROP TABLE IF EXISTS books")
         cursor.execute("DROP TABLE IF EXISTS authors")
         cursor.execute("DROP TABLE IF EXISTS sample_table")
@@ -65,14 +67,14 @@ def main():
         print("✓ Seed data loaded successfully")
 
         # Verify data
-        cursor.execute("SELECT COUNT(*) FROM authors")
-        author_count = cursor.fetchone()[0]
-        cursor.execute("SELECT COUNT(*) FROM books")
-        book_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM projects")
+        project_count = cursor.fetchone()[0]
+        cursor.execute("SELECT COUNT(*) FROM tasks")
+        task_count = cursor.fetchone()[0]
 
         print(f"\nDatabase setup complete!")
-        print(f"- Authors: {author_count}")
-        print(f"- Books: {book_count}")
+        print(f"- Projects: {project_count}")
+        print(f"- Tasks: {task_count}")
 
     except Exception as e:
         print(f"Error: {e}")

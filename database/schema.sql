@@ -1,35 +1,35 @@
--- Database Schema for Books and Authors
+-- Database Schema for Projects and Tasks
 -- Run this file to create the required database structure
 
--- Create authors table
-CREATE TABLE authors (
-    author_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    birth_year INT,
-    nationality VARCHAR(100),
+-- Create projects table
+CREATE TABLE projects (
+    project_id INT AUTO_INCREMENT PRIMARY KEY,
+    project_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    start_date DATE,
+    status VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Create books table
-CREATE TABLE books (
-    book_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    author_id INT NOT NULL,
-    isbn VARCHAR(13) UNIQUE,
-    publication_year INT,
-    genre VARCHAR(100),
-    pages INT,
+-- Create tasks table
+CREATE TABLE tasks (
+    task_id INT AUTO_INCREMENT PRIMARY KEY,
+    task_name VARCHAR(255) NOT NULL,
+    project_id INT NOT NULL,
+    description TEXT,
+    due_date DATE,
+    priority VARCHAR(50),
+    status VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (author_id) REFERENCES authors(author_id)
+    FOREIGN KEY (project_id) REFERENCES projects(project_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
 -- Add indexes for common queries
-CREATE INDEX idx_authors_name ON authors (last_name, first_name);
-CREATE INDEX idx_books_title ON books (title);
-CREATE INDEX idx_books_author ON books (author_id);
-CREATE INDEX idx_books_isbn ON books (isbn);
+CREATE INDEX idx_projects_name ON projects (project_name);
+CREATE INDEX idx_tasks_name ON tasks (task_name);
+CREATE INDEX idx_tasks_project ON tasks (project_id);
+CREATE INDEX idx_tasks_status ON tasks (status);
